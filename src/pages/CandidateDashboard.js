@@ -1,33 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import NotificationsMenu from '../components/NotificationsMenu';
+import ProfileMenu from '../components/ProfileMenu';
 
 const CandidateDashboard = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [activeMenuItem, setActiveMenuItem] = useState('dashboard');
   const [stars, setStars] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  
+  // Exemple de notifications
+  const [notifications] = useState([
+    {
+      id: 1,
+      text: "Votre candidature à été vue par TechVision",
+      time: "Il y a 2 heures",
+      icon: "fa-eye",
+      read: false
+    },
+    {
+      id: 2,
+      text: "DigitalSoft vous invite à un entretien",
+      time: "Il y a 1 jour",
+      icon: "fa-calendar-check",
+      read: false
+    },
+    {
+      id: 3,
+      text: "3 nouvelles offres correspondent à votre profil",
+      time: "Il y a 2 jours",
+      icon: "fa-briefcase",
+      read: true
+    }
+  ]);
 
   // Données du tableau de bord (à remplacer par des données réelles de votre API)
   const dashboardData = {
     applications: {
-      count: 12,
-      change: 3,
+      count: 0,
+      change: 0,
       period: 'cette semaine'
     },
     interviews: {
-      count: 4,
-      change: 1,
+      count: 0,
+      change: 0,
       period: 'à venir'
     },
     matchingRate: {
-      value: 78,
-      change: 5,
+      value: 0,
+      change: 0,
       period: 'ce mois'
     },
     savedJobs: {
-      count: 15,
-      change: 7,
+      count: 0,
+      change: 0,
       period: 'nouveaux'
     }
   };
@@ -59,6 +88,23 @@ const CandidateDashboard = () => {
       console.error("Erreur lors de la déconnexion:", error);
     }
   };
+
+  // Fermer les menus si on clique ailleurs
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showNotifications && !event.target.closest('.notifications-container')) {
+        setShowNotifications(false);
+      }
+      if (showProfileMenu && !event.target.closest('.profile-container')) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNotifications, showProfileMenu]);
 
   return (
     <div className="dashboard-container">
@@ -94,14 +140,34 @@ const CandidateDashboard = () => {
           <Link to="/conseils" className="nav-link">Conseils</Link>
         </nav>
         <div className="header-actions">
-          <div className="notifications">
-            <div className="notification-icon">
-              <span className="notification-badge">3</span>
+          <div className="notifications-container">
+            <div 
+              className="notification-icon" 
+              onClick={() => setShowNotifications(!showNotifications)}
+            >
+              <span className="notification-badge">{notifications.filter(n => !n.read).length}</span>
               <i className="far fa-bell"></i>
             </div>
+            {showNotifications && (
+              <NotificationsMenu 
+                notifications={notifications} 
+                onClose={() => setShowNotifications(false)}
+              />
+            )}
           </div>
-          <div className="user-profile" onClick={handleLogout}>
-            <div className="user-avatar">JD</div>
+          <div className="profile-container">
+            <div 
+              className="user-avatar" 
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+            >
+              {`${currentUser?.profile?.firstName?.charAt(0) || 'J'}${currentUser?.profile?.lastName?.charAt(0) || 'D'}`}
+            </div>
+            {showProfileMenu && (
+              <ProfileMenu 
+                user={currentUser} 
+                onLogout={handleLogout}
+              />
+            )}
           </div>
         </div>
       </header>
@@ -179,7 +245,7 @@ const CandidateDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.applications.count}</div>
-                <div className="card-change positive">
+                <div className="card-change">
                   <i className="fas fa-arrow-up"></i> {dashboardData.applications.change} {dashboardData.applications.period}
                 </div>
               </div>
@@ -194,7 +260,7 @@ const CandidateDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.interviews.count}</div>
-                <div className="card-change positive">
+                <div className="card-change">
                   <i className="fas fa-arrow-up"></i> {dashboardData.interviews.change} {dashboardData.interviews.period}
                 </div>
               </div>
@@ -209,7 +275,7 @@ const CandidateDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.matchingRate.value}%</div>
-                <div className="card-change positive">
+                <div className="card-change">
                   <i className="fas fa-arrow-up"></i> {dashboardData.matchingRate.change}% {dashboardData.matchingRate.period}
                 </div>
               </div>
@@ -224,7 +290,7 @@ const CandidateDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.savedJobs.count}</div>
-                <div className="card-change positive">
+                <div className="card-change">
                   <i className="fas fa-arrow-up"></i> {dashboardData.savedJobs.change} {dashboardData.savedJobs.period}
                 </div>
               </div>
@@ -235,7 +301,6 @@ const CandidateDashboard = () => {
           <div className="recent-jobs-section">
             <h2 className="section-title">Offres recommandées</h2>
             <div className="recent-jobs-list">
-              {/* Ajoutez ici vos offres recommandées */}
               <div className="no-jobs-message">
                 Aucune offre recommandée à afficher pour le moment. Complétez votre profil pour recevoir des recommandations personnalisées.
                 <br />

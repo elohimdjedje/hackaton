@@ -361,7 +361,7 @@ const RecruiterSignup = () => {
               <p className="rate-description">de satisfaction des recruteurs utilisant notre plateforme</p>
             </div>
             
-            <Link to="/demo" className="demo-btn">Voir la démo</Link>
+            {/* Bouton "Voir démo" supprimé */}
           </div>
         </div>
       </div>

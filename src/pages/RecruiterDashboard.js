@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import NotificationsMenu from '../components/NotificationsMenu';
+import ProfileMenu from '../components/ProfileMenu';
 
 const RecruiterDashboard = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [activeMenuItem, setActiveMenuItem] = useState('dashboard');
   const [stars, setStars] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  
+  // Par défaut, aucune notification pour un nouveau compte
+  const [notifications] = useState([]);
 
-  // Données du tableau de bord (à remplacer par des données réelles de votre API)
+  // Données du tableau de bord initialisées à zéro
   const dashboardData = {
     activeJobs: {
-      count: 8,
-      change: 2,
+      count: 0,
+      change: 0,
       period: 'cette semaine'
     },
     applications: {
-      count: 42,
-      change: 7,
+      count: 0,
+      change: 0,
       period: 'aujourd\'hui'
     },
     matchingRate: {
-      value: 85,
-      change: 3,
+      value: 0,
+      change: 0,
       period: 'ce mois'
     },
     unreadMessages: {
-      count: 5,
-      change: 2,
+      count: 0,
+      change: 0,
       period: 'nouveaux'
     }
   };
@@ -59,6 +66,23 @@ const RecruiterDashboard = () => {
       console.error("Erreur lors de la déconnexion:", error);
     }
   };
+
+  // Fermer les menus si on clique ailleurs
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showNotifications && !event.target.closest('.notifications-container')) {
+        setShowNotifications(false);
+      }
+      if (showProfileMenu && !event.target.closest('.profile-container')) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNotifications, showProfileMenu]);
 
   return (
     <div className="dashboard-container">
@@ -94,14 +118,34 @@ const RecruiterDashboard = () => {
           <Link to="/conseils" className="nav-link">Conseils</Link>
         </nav>
         <div className="header-actions">
-          <div className="notifications">
-            <div className="notification-icon">
-              <span className="notification-badge">1</span>
+          <div className="notifications-container">
+            <div 
+              className="notification-icon" 
+              onClick={() => setShowNotifications(!showNotifications)}
+            >
+              <span className="notification-badge">{notifications.filter(n => !n.read).length}</span>
               <i className="far fa-bell"></i>
             </div>
+            {showNotifications && (
+              <NotificationsMenu 
+                notifications={notifications} 
+                onClose={() => setShowNotifications(false)}
+              />
+            )}
           </div>
-          <div className="user-profile" onClick={handleLogout}>
-            <div className="user-avatar">MD</div>
+          <div className="profile-container">
+            <div 
+              className="user-avatar" 
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+            >
+              {currentUser?.profile?.fullName?.split(' ').map(n => n[0]).join('') || 'MD'}
+            </div>
+            {showProfileMenu && (
+              <ProfileMenu 
+                user={currentUser} 
+                onLogout={handleLogout}
+              />
+            )}
           </div>
         </div>
       </header>
@@ -187,8 +231,8 @@ const RecruiterDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.activeJobs.count}</div>
-                <div className="card-change positive">
-                  <i className="fas fa-arrow-up"></i> {dashboardData.activeJobs.change} {dashboardData.activeJobs.period}
+                <div className="card-change">
+                  <i className="fas fa-arrow-right"></i> {dashboardData.activeJobs.period}
                 </div>
               </div>
             </div>
@@ -202,8 +246,8 @@ const RecruiterDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.applications.count}</div>
-                <div className="card-change positive">
-                  <i className="fas fa-arrow-up"></i> {dashboardData.applications.change} {dashboardData.applications.period}
+                <div className="card-change">
+                  <i className="fas fa-arrow-right"></i> {dashboardData.applications.period}
                 </div>
               </div>
             </div>
@@ -217,8 +261,8 @@ const RecruiterDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.matchingRate.value}%</div>
-                <div className="card-change positive">
-                  <i className="fas fa-arrow-up"></i> {dashboardData.matchingRate.change}% {dashboardData.matchingRate.period}
+                <div className="card-change">
+                  <i className="fas fa-arrow-right"></i> {dashboardData.matchingRate.period}
                 </div>
               </div>
             </div>
@@ -232,27 +276,30 @@ const RecruiterDashboard = () => {
               </div>
               <div className="card-body">
                 <div className="card-value">{dashboardData.unreadMessages.count}</div>
-                <div className="card-change positive">
-                  <i className="fas fa-arrow-up"></i> {dashboardData.unreadMessages.change} {dashboardData.unreadMessages.period}
+                <div className="card-change">
+                  <i className="fas fa-arrow-right"></i> {dashboardData.unreadMessages.period}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Recent job offers */}
-          <div className="recent-jobs-section">
-            <h2 className="section-title">Offres récentes</h2>
-            <div className="recent-jobs-list">
-              {/* Ajoutez ici vos offres récentes */}
-              <div className="no-jobs-message">
-                Aucune offre récente à afficher pour le moment. 
-                <br />
-                <Link to="/new-job-offer" className="action-btn new-job-btn" style={{marginTop: '1rem'}}>
-                  <i className="fas fa-plus"></i>
-                  Créer une offre
-                </Link>
-              </div>
-            </div>
+          {/* Message de bienvenue pour les nouveaux recruteurs */}
+          <div className="welcome-message" style={{
+            backgroundColor: 'rgba(33, 33, 49, 0.8)',
+            borderRadius: '15px',
+            padding: '2rem',
+            marginTop: '2rem',
+            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
+            textAlign: 'center'
+          }}>
+            <h2 style={{marginBottom: '1rem', color: '#8c52ff'}}>Bienvenue sur votre tableau de bord TalentMatch!</h2>
+            <p style={{marginBottom: '1.5rem', lineHeight: '1.6', color: '#e0e0e0'}}>
+              Votre compte recruteur vient d'être créé. Commencez à publier des offres d'emploi pour trouver les meilleurs talents grâce à notre algorithme de matching intelligent.
+            </p>
+            <Link to="/new-job-offer" className="action-btn new-job-btn" style={{marginTop: '1rem', display: 'inline-flex'}}>
+              <i className="fas fa-plus"></i>
+              Créer ma première offre
+            </Link>
           </div>
         </main>
       </div>
