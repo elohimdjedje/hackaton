@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const MesCandidatures = () => {
-  // eslint-disable-next-line no-unused-vars
   const { currentUser } = useAuth();
   const [stars, setStars] = useState([]);
   const [candidatures, setCandidatures] = useState([]);
@@ -29,75 +28,59 @@ const MesCandidatures = () => {
     generateStars();
   }, []);
 
-  // Simuler le chargement des candidatures depuis une API
+  // Charger les candidatures depuis Firebase
   useEffect(() => {
-    // Données fictives de candidatures
-    const mockCandidatures = [
-      {
-        id: 1,
-        poste: "Développeur Full Stack React",
-        entreprise: "TechVision",
-        logo: "TV",
-        datePostulation: "2025-03-15",
-        statut: "entretien",
-        matching: 92,
-        dernierContact: "2025-03-20",
-        notes: "Entretien technique programmé pour le 5 avril"
-      },
-      {
-        id: 2,
-        poste: "UX/UI Designer",
-        entreprise: "DesignHub",
-        logo: "DH",
-        datePostulation: "2025-03-10",
-        statut: "envoyée",
-        matching: 85,
-        dernierContact: "2025-03-10",
-        notes: ""
-      },
-      {
-        id: 3,
-        poste: "Chef de projet digital",
-        entreprise: "AgenceWeb",
-        logo: "AW",
-        datePostulation: "2025-03-05",
-        statut: "rejetée",
-        matching: 73,
-        dernierContact: "2025-03-12",
-        notes: "Profil ne correspond pas exactement à leurs besoins actuels"
-      },
-      {
-        id: 4,
-        poste: "Développeur Frontend",
-        entreprise: "StartupInno",
-        logo: "SI",
-        datePostulation: "2025-02-28",
-        statut: "acceptée",
-        matching: 95,
-        dernierContact: "2025-03-18",
-        notes: "Offre acceptée, début le 15 avril"
-      },
-      {
-        id: 5,
-        poste: "Product Owner",
-        entreprise: "DigitalSoft",
-        logo: "DS",
-        datePostulation: "2025-03-02",
-        statut: "en_cours",
-        matching: 88,
-        dernierContact: "2025-03-08",
-        notes: "CV en cours d'examen"
-      }
-    ];
-    
-    setCandidatures(mockCandidatures);
-  }, []);
+    // À remplacer par les appels Firebase
+    // Exemple:
+    // const fetchApplications = async () => {
+    //   if (!currentUser) return;
+    //   
+    //   try {
+    //     const applicationsRef = firebase.firestore()
+    //       .collection('applications')
+    //       .where('candidateId', '==', currentUser.uid)
+    //       .orderBy('datePostulation', 'desc');
+    //     
+    //     const snapshot = await applicationsRef.get();
+    //     const applicationsList = [];
+    //     
+    //     for (const doc of snapshot.docs) {
+    //       const application = {
+    //         id: doc.id,
+    //         ...doc.data()
+    //       };
+    //       
+    //       // Récupérer les infos de l'offre associée
+    //       if (application.jobId) {
+    //         const jobDoc = await firebase.firestore()
+    //           .collection('jobs')
+    //           .doc(application.jobId)
+    //           .get();
+    //         
+    //         if (jobDoc.exists) {
+    //           application.poste = jobDoc.data().titre;
+    //           application.entreprise = jobDoc.data().entreprise;
+    //           application.logo = jobDoc.data().logo;
+    //         }
+    //       }
+    //       
+    //       applicationsList.push(application);
+    //     }
+    //     
+    //     setCandidatures(applicationsList);
+    //   } catch (error) {
+    //     console.error('Erreur lors du chargement des candidatures:', error);
+    //   }
+    // };
+    // 
+    // fetchApplications();
+  }, [currentUser]);
 
   // Filtrer les candidatures selon le statut et la recherche
   const candidaturesFiltrees = candidatures.filter(candidature => {
     const matchStatut = filtreStatut === 'tous' || candidature.statut === filtreStatut;
-    const matchRecherche = candidature.poste.toLowerCase().includes(recherche.toLowerCase()) || 
-                          candidature.entreprise.toLowerCase().includes(recherche.toLowerCase());
+    const matchRecherche = candidature.poste?.toLowerCase().includes(recherche.toLowerCase()) || 
+                          candidature.entreprise?.toLowerCase().includes(recherche.toLowerCase());
     return matchStatut && matchRecherche;
   });
 
@@ -166,7 +149,7 @@ const MesCandidatures = () => {
             </div>
           </div>
           <div className="user-avatar">
-            JD
+            {currentUser?.profile?.firstName?.charAt(0) || 'J'}{currentUser?.profile?.lastName?.charAt(0) || 'D'}
           </div>
         </div>
       </header>
@@ -295,11 +278,11 @@ const MesCandidatures = () => {
                     <div className="candidature-dates">
                       <div className="date-item">
                         <span className="date-label">Postulé le:</span>
-                        <span className="date-value">{new Date(candidature.datePostulation).toLocaleDateString('fr-FR')}</span>
+                        <span className="date-value">{candidature.datePostulation ? new Date(candidature.datePostulation).toLocaleDateString('fr-FR') : ''}</span>
                       </div>
                       <div className="date-item">
                         <span className="date-label">Dernier contact:</span>
-                        <span className="date-value">{new Date(candidature.dernierContact).toLocaleDateString('fr-FR')}</span>
+                        <span className="date-value">{candidature.dernierContact ? new Date(candidature.dernierContact).toLocaleDateString('fr-FR') : ''}</span>
                       </div>
                     </div>
                     <div className="candidature-statut" style={{ backgroundColor: getStatutColor(candidature.statut) }}>

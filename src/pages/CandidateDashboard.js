@@ -12,33 +12,9 @@ const CandidateDashboard = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   
-  // Exemple de notifications
-  const [notifications] = useState([
-    {
-      id: 1,
-      text: "Votre candidature à été vue par TechVision",
-      time: "Il y a 2 heures",
-      icon: "fa-eye",
-      read: false
-    },
-    {
-      id: 2,
-      text: "DigitalSoft vous invite à un entretien",
-      time: "Il y a 1 jour",
-      icon: "fa-calendar-check",
-      read: false
-    },
-    {
-      id: 3,
-      text: "3 nouvelles offres correspondent à votre profil",
-      time: "Il y a 2 jours",
-      icon: "fa-briefcase",
-      read: true
-    }
-  ]);
-
-  // Données du tableau de bord (à remplacer par des données réelles de votre API)
-  const dashboardData = {
+  // Ces états seront remplis avec des données de Firebase
+  const [notifications, setNotifications] = useState([]);
+  const [dashboardData, setDashboardData] = useState({
     applications: {
       count: 0,
       change: 0,
@@ -59,7 +35,8 @@ const CandidateDashboard = () => {
       change: 0,
       period: 'nouveaux'
     }
-  };
+  });
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
 
   // Génération des étoiles pour le background
   useEffect(() => {
@@ -79,6 +56,93 @@ const CandidateDashboard = () => {
     
     generateStars();
   }, []);
+
+  // Chargement des données du dashboard depuis Firebase
+  useEffect(() => {
+    // À remplacer par les appels Firebase
+    // Exemple:
+    // const fetchDashboardData = async () => {
+    //   if (!currentUser) return;
+    //   
+    //   // Récupérer les candidatures
+    //   const applicationsRef = firebase.firestore()
+    //     .collection('applications')
+    //     .where('candidateId', '==', currentUser.uid);
+    //   const applicationsSnapshot = await applicationsRef.get();
+    //   const applicationsCount = applicationsSnapshot.size;
+    //   
+    //   // Récupérer les entretiens
+    //   const interviewsRef = firebase.firestore()
+    //     .collection('interviews')
+    //     .where('candidateId', '==', currentUser.uid)
+    //     .where('date', '>=', new Date());
+    //   const interviewsSnapshot = await interviewsRef.get();
+    //   const interviewsCount = interviewsSnapshot.size;
+    //   
+    //   // Récupérer les offres enregistrées
+    //   const savedJobsRef = firebase.firestore()
+    //     .collection('savedJobs')
+    //     .where('candidateId', '==', currentUser.uid);
+    //   const savedJobsSnapshot = await savedJobsRef.get();
+    //   const savedJobsCount = savedJobsSnapshot.size;
+    //   
+    //   // Récupérer le taux de matching
+    //   const userRef = firebase.firestore().collection('users').doc(currentUser.uid);
+    //   const userDoc = await userRef.get();
+    //   const matchingRate = userDoc.data().matchingRate || 0;
+    //   
+    //   setDashboardData({
+    //     applications: {
+    //       count: applicationsCount,
+    //       change: 0,  // à calculer
+    //       period: 'cette semaine'
+    //     },
+    //     interviews: {
+    //       count: interviewsCount,
+    //       change: 0,  // à calculer
+    //       period: 'à venir'
+    //     },
+    //     matchingRate: {
+    //       value: matchingRate,
+    //       change: 0,  // à calculer
+    //       period: 'ce mois'
+    //     },
+    //     savedJobs: {
+    //       count: savedJobsCount,
+    //       change: 0,  // à calculer
+    //       period: 'nouveaux'
+    //     }
+    //   });
+    //   
+    //   // Récupérer les notifications
+    //   const notificationsRef = firebase.firestore()
+    //     .collection('notifications')
+    //     .where('userId', '==', currentUser.uid)
+    //     .orderBy('timestamp', 'desc')
+    //     .limit(10);
+    //   const notificationsSnapshot = await notificationsRef.get();
+    //   const notificationsList = notificationsSnapshot.docs.map(doc => ({
+    //     id: doc.id,
+    //     ...doc.data()
+    //   }));
+    //   setNotifications(notificationsList);
+    //   
+    //   // Récupérer les offres recommandées
+    //   const recommendedJobsRef = firebase.firestore()
+    //     .collection('recommendedJobs')
+    //     .where('candidateId', '==', currentUser.uid)
+    //     .orderBy('matching', 'desc')
+    //     .limit(5);
+    //   const recommendedJobsSnapshot = await recommendedJobsRef.get();
+    //   const recommendedJobsList = recommendedJobsSnapshot.docs.map(doc => ({
+    //     id: doc.id,
+    //     ...doc.data()
+    //   }));
+    //   setRecommendedJobs(recommendedJobsList);
+    // };
+    // 
+    // fetchDashboardData();
+  }, [currentUser]);
 
   const handleLogout = async () => {
     try {
@@ -301,14 +365,22 @@ const CandidateDashboard = () => {
           <div className="recent-jobs-section">
             <h2 className="section-title">Offres recommandées</h2>
             <div className="recent-jobs-list">
-              <div className="no-jobs-message">
-                Aucune offre recommandée à afficher pour le moment. Complétez votre profil pour recevoir des recommandations personnalisées.
-                <br />
-                <Link to="/cv-analysis" className="action-btn new-job-btn" style={{marginTop: '1rem'}}>
-                  <i className="fas fa-upload"></i>
-                  Télécharger mon CV
-                </Link>
-              </div>
+              {recommendedJobs && recommendedJobs.length > 0 ? (
+                recommendedJobs.map(job => (
+                  <div key={job.id} className="job-card">
+                    {/* Contenu de la carte d'offre d'emploi */}
+                  </div>
+                ))
+              ) : (
+                <div className="no-jobs-message">
+                  Aucune offre recommandée à afficher pour le moment. Complétez votre profil pour recevoir des recommandations personnalisées.
+                  <br />
+                  <Link to="/cv-analysis" className="action-btn new-job-btn" style={{marginTop: '1rem'}}>
+                    <i className="fas fa-upload"></i>
+                    Télécharger mon CV
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </main>

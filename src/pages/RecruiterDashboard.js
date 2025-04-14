@@ -12,11 +12,9 @@ const RecruiterDashboard = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   
-  // Par défaut, aucune notification pour un nouveau compte
-  const [notifications] = useState([]);
-
-  // Données du tableau de bord initialisées à zéro
-  const dashboardData = {
+  // États à remplir avec des données Firebase
+  const [notifications, setNotifications] = useState([]);
+  const [dashboardData, setDashboardData] = useState({
     activeJobs: {
       count: 0,
       change: 0,
@@ -37,7 +35,7 @@ const RecruiterDashboard = () => {
       change: 0,
       period: 'nouveaux'
     }
-  };
+  });
 
   // Génération des étoiles pour le background
   useEffect(() => {
@@ -57,6 +55,79 @@ const RecruiterDashboard = () => {
     
     generateStars();
   }, []);
+
+  // Chargement des données du dashboard depuis Firebase
+  useEffect(() => {
+    // À remplacer par les appels Firebase
+    // Exemple:
+    // const fetchDashboardData = async () => {
+    //   if (!currentUser) return;
+    //   
+    //   // Récupérer les offres actives
+    //   const jobsRef = firebase.firestore()
+    //     .collection('jobs')
+    //     .where('recruiterId', '==', currentUser.uid)
+    //     .where('status', '==', 'active');
+    //   const jobsSnapshot = await jobsRef.get();
+    //   const jobsCount = jobsSnapshot.size;
+    //   
+    //   // Récupérer les candidatures
+    //   const applicationsRef = firebase.firestore()
+    //     .collection('applications')
+    //     .where('recruiterId', '==', currentUser.uid);
+    //   const applicationsSnapshot = await applicationsRef.get();
+    //   const applicationsCount = applicationsSnapshot.size;
+    //   
+    //   // Récupérer les messages non lus
+    //   const messagesRef = firebase.firestore()
+    //     .collection('messages')
+    //     .where('recipientId', '==', currentUser.uid)
+    //     .where('read', '==', false);
+    //   const messagesSnapshot = await messagesRef.get();
+    //   const messagesCount = messagesSnapshot.size;
+    //   
+    //   // Récupérer le taux de matching
+    //   const matchingRate = 85; // À calculer en fonction des embauches réussies
+    //   
+    //   setDashboardData({
+    //     activeJobs: {
+    //       count: jobsCount,
+    //       change: 0,
+    //       period: 'cette semaine'
+    //     },
+    //     applications: {
+    //       count: applicationsCount,
+    //       change: 0,
+    //       period: 'aujourd\'hui'
+    //     },
+    //     matchingRate: {
+    //       value: matchingRate,
+    //       change: 0,
+    //       period: 'ce mois'
+    //     },
+    //     unreadMessages: {
+    //       count: messagesCount,
+    //       change: 0,
+    //       period: 'nouveaux'
+    //     }
+    //   });
+    //   
+    //   // Récupérer les notifications
+    //   const notificationsRef = firebase.firestore()
+    //     .collection('notifications')
+    //     .where('userId', '==', currentUser.uid)
+    //     .orderBy('timestamp', 'desc')
+    //     .limit(10);
+    //   const notificationsSnapshot = await notificationsRef.get();
+    //   const notificationsList = notificationsSnapshot.docs.map(doc => ({
+    //     id: doc.id,
+    //     ...doc.data()
+    //   }));
+    //   setNotifications(notificationsList);
+    // };
+    // 
+    // fetchDashboardData();
+  }, [currentUser]);
 
   const handleLogout = async () => {
     try {
@@ -294,7 +365,7 @@ const RecruiterDashboard = () => {
           }}>
             <h2 style={{marginBottom: '1rem', color: '#8c52ff'}}>Bienvenue sur votre tableau de bord TalentMatch!</h2>
             <p style={{marginBottom: '1.5rem', lineHeight: '1.6', color: '#e0e0e0'}}>
-              Votre compte recruteur vient d'être créé. Commencez à publier des offres d'emploi pour trouver les meilleurs talents grâce à notre algorithme de matching intelligent.
+              Commencez à publier des offres d'emploi pour trouver les meilleurs talents grâce à notre algorithme de matching intelligent.
             </p>
             <Link to="/new-job-offer" className="action-btn new-job-btn" style={{marginTop: '1rem', display: 'inline-flex'}}>
               <i className="fas fa-plus"></i>

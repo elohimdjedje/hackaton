@@ -33,84 +33,54 @@ const CVAnalysis = () => {
     generateStars();
   }, []);
 
-  // Simuler l'analyse du CV lorsqu'un fichier est téléchargé
-  useEffect(() => {
-    if (uploadedFile && analyzing) {
-      // Simuler la progression de l'analyse
-      const interval = setInterval(() => {
-        setAnalysisProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 5;
-        });
-      }, 200);
-
-      // Simuler la fin de l'analyse après 5 secondes
-      setTimeout(() => {
-        setAnalyzing(false);
-        setAnalysisComplete(true);
-        clearInterval(interval);
-        setAnalysisProgress(100);
-        
-        // Simuler des compétences extraites du CV
-        setExtractedSkills([
-          { id: 1, name: 'React', level: 90 },
-          { id: 2, name: 'JavaScript', level: 85 },
-          { id: 3, name: 'Node.js', level: 80 },
-          { id: 4, name: 'HTML/CSS', level: 95 },
-          { id: 5, name: 'MongoDB', level: 75 },
-          { id: 6, name: 'Git', level: 85 },
-        ]);
-        
-        // Simuler des offres d'emploi correspondantes
-        setMatchingJobs([
-          {
-            id: 1,
-            titre: 'Développeur Full Stack React/Node',
-            entreprise: 'TechVision',
-            localisation: 'Paris, France',
-            matching: 92
-          },
-          {
-            id: 2,
-            titre: 'Développeur Frontend React',
-            entreprise: 'StartupInno',
-            localisation: 'Lyon, France',
-            matching: 88
-          },
-          {
-            id: 3,
-            titre: 'Lead Developer JavaScript',
-            entreprise: 'DigitalSoft',
-            localisation: 'Marseille, France',
-            matching: 85
-          }
-        ]);
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
-  }, [uploadedFile, analyzing]);
-
+  // Cette fonction sera remplacée par une vraie analyse CV
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       setUploadedFile(file);
       setAnalyzing(true);
+      
+      // À remplacer par l'appel API d'analyse de CV
+      // Exemple:
+      // const formData = new FormData();
+      // formData.append('cv', file);
+      // fetch('/api/analyze-cv', { method: 'POST', body: formData })
+      //   .then(res => res.json())
+      //   .then(data => {
+      //     setExtractedSkills(data.skills);
+      //     setMatchingJobs(data.matchingJobs);
+      //     setAnalyzing(false);
+      //     setAnalysisComplete(true);
+      //   });
+      
+      // Simulation de progression (à remplacer par une vraie)
+      const interval = setInterval(() => {
+        setAnalysisProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            setAnalyzing(false);
+            setAnalysisComplete(true);
+            return 100;
+          }
+          return prev + 5;
+        });
+      }, 200);
     }
   };
 
-  const handleConfirm = () => {
-    // Simuler la sauvegarde des données de profil
-    completeProfile({
-      skills: extractedSkills,
-      profileCompleted: true
-    });
-    
-    // Rediriger vers le tableau de bord candidat
-    navigate('/candidate-dashboard');
+  const handleConfirm = async () => {
+    try {
+      // À implémenter avec Firebase
+      await completeProfile({
+        skills: extractedSkills,
+        profileCompleted: true
+      });
+      
+      // Rediriger vers le tableau de bord candidat
+      navigate('/candidate-dashboard');
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour du profil:", error);
+    }
   };
 
   return (
@@ -226,22 +196,26 @@ const CVAnalysis = () => {
               <div className="matching-jobs-section">
                 <h4>Offres d'emploi correspondantes</h4>
                 <div className="matching-jobs-list">
-                  {matchingJobs.map(job => (
-                    <div key={job.id} className="matching-job-item">
-                      <div className="job-info">
-                        <h5 className="job-title">{job.titre}</h5>
-                        <p className="job-company">{job.entreprise}</p>
-                        <p className="job-location">
-                          <i className="fas fa-map-marker-alt"></i>
-                          <span>{job.localisation}</span>
-                        </p>
+                  {matchingJobs.length > 0 ? (
+                    matchingJobs.map(job => (
+                      <div key={job.id} className="matching-job-item">
+                        <div className="job-info">
+                          <h5 className="job-title">{job.titre}</h5>
+                          <p className="job-company">{job.entreprise}</p>
+                          <p className="job-location">
+                            <i className="fas fa-map-marker-alt"></i>
+                            <span>{job.localisation}</span>
+                          </p>
+                        </div>
+                        <div className="job-matching">
+                          <div className="matching-badge">{job.matching}%</div>
+                          <span>Matching</span>
+                        </div>
                       </div>
-                      <div className="job-matching">
-                        <div className="matching-badge">{job.matching}%</div>
-                        <span>Matching</span>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p>Aucune offre correspondante trouvée.</p>
+                  )}
                 </div>
               </div>
               
