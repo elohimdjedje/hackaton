@@ -183,20 +183,66 @@ const HomePage = () => {
           </Link>
         </div>
         
-        <div className="companies-grid">
-          {featuredCompanies.map(company => (
-            <Link key={company.id} to={`/entreprises/${company.id}`} className="company-card">
-              <div className="company-logo">
-                {company.logo}
+        <div className="company-cards-grid">
+          <div className="company-card-wrapper">
+            <div className="company-logo-box tv">
+              <span>TV</span>
+            </div>
+            <div className="company-details">
+              <h3 className="company-name">TechVision</h3>
+              <span className="company-tag">Tech</span>
+              <p className="company-description">Startup innovante dans le domaine de la réalité augmentée</p>
+              <div className="company-domaine">
+                <span>Domaine de la réalité augmentée</span>
               </div>
-              <div className="company-info">
-                <h3 className="company-name">{company.name}</h3>
-                <p className="company-sector">{company.sector}</p>
-                <p className="company-description">{company.description}</p>
-                <span className="company-jobs">{company.jobs} offres d'emploi</span>
+              <span className="company-jobs">12 offres d'emploi</span>
+            </div>
+          </div>
+          
+          <div className="company-card-wrapper">
+            <div className="company-logo-box dm">
+              <span>DM</span>
+            </div>
+            <div className="company-details">
+              <h3 className="company-name">DigiMarketing</h3>
+              <span className="company-tag">Marketing</span>
+              <p className="company-description">Agence marketing digitale spécialisée en growth hacking</p>
+              <div className="company-domaine">
+                <span>Growth hacking</span>
               </div>
-            </Link>
-          ))}
+              <span className="company-jobs">8 offres d'emploi</span>
+            </div>
+          </div>
+          
+          <div className="company-card-wrapper">
+            <div className="company-logo-box df">
+              <span>DF</span>
+            </div>
+            <div className="company-details">
+              <h3 className="company-name">DesignFusion</h3>
+              <span className="company-tag">Design</span>
+              <p className="company-description">Studio de design primé créant des expériences utilisateur exceptionnelles</p>
+              <div className="company-domaine">
+                <span>Expériences utilisateur</span>
+              </div>
+              <span className="company-jobs">5 offres d'emploi</span>
+            </div>
+          </div>
+          
+          <div className="company-card-wrapper">
+            <div className="company-logo-box sp">
+              <span>SP</span>
+            </div>
+            <div className="company-details">
+              <h3 className="company-name">SalesPro</h3>
+              <span className="company-tag">Commercial</span>
+              <p className="company-description">Leader en solutions de vente pour les entreprises du CAC 40</p>
+              <div className="company-domaine">
+                <span>Solutions de vente</span>
+              </div>
+              <span className="company-jobs">9 offres d'emploi</span>
+            </div>
+          </div>
         </div>
       </section>
       
