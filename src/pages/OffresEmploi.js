@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const OffresEmploi = () => {
-  // eslint-disable-next-line no-unused-vars
   const { currentUser } = useAuth();
   const [stars, setStars] = useState([]);
   const [offres, setOffres] = useState([]);
@@ -35,91 +34,37 @@ const OffresEmploi = () => {
     generateStars();
   }, []);
 
-  // Simuler le chargement des offres depuis une API
+  // Chargement des offres d'emploi depuis Firebase
   useEffect(() => {
-    // Données fictives d'offres d'emploi
-    const mockOffres = [
-      {
-        id: 1,
-        titre: "Développeur Full Stack React/Node",
-        entreprise: "TechVision",
-        logo: "TV",
-        localisation: "Paris, France",
-        typeContrat: "CDI",
-        experienceRequise: "3-5 ans",
-        secteur: "Informatique",
-        salaire: "50k€ - 65k€",
-        description: "Nous recherchons un développeur Full Stack pour rejoindre notre équipe produit...",
-        competences: ["React", "Node.js", "MongoDB", "Express", "JavaScript"],
-        datePublication: "2025-03-20",
-        matching: 92
-      },
-      {
-        id: 2,
-        titre: "UX/UI Designer Senior",
-        entreprise: "DesignHub",
-        logo: "DH",
-        localisation: "Lyon, France",
-        typeContrat: "Freelance",
-        experienceRequise: "5+ ans",
-        secteur: "Design",
-        salaire: "450€ - 600€/jour",
-        description: "Rejoignez notre agence de design pour travailler sur des projets innovants...",
-        competences: ["Figma", "Adobe XD", "Sketch", "User Research", "Prototypage"],
-        datePublication: "2025-03-19",
-        matching: 85
-      },
-      {
-        id: 3,
-        titre: "Lead Developer",
-        entreprise: "StartupInno",
-        logo: "SI",
-        localisation: "Bordeaux, France",
-        typeContrat: "CDI",
-        experienceRequise: "5+ ans",
-        secteur: "Informatique",
-        salaire: "60k€ - 75k€",
-        description: "Nous cherchons un Lead Developer pour diriger notre équipe technique...",
-        competences: ["Architecture logicielle", "React", "AWS", "CI/CD", "Management"],
-        datePublication: "2025-03-18",
-        matching: 78
-      },
-      {
-        id: 4,
-        titre: "Product Owner",
-        entreprise: "DigitalSoft",
-        logo: "DS",
-        localisation: "Marseille, France",
-        typeContrat: "CDD",
-        experienceRequise: "2-3 ans",
-        secteur: "Produit",
-        salaire: "45k€ - 55k€",
-        description: "Vous serez responsable de la définition et de la priorisation des fonctionnalités...",
-        competences: ["Agile", "Scrum", "User Stories", "Roadmap Produit", "Stakeholder Management"],
-        datePublication: "2025-03-16",
-        matching: 89
-      },
-      {
-        id: 5,
-        titre: "Data Scientist",
-        entreprise: "DataInsight",
-        logo: "DI",
-        localisation: "Toulouse, France",
-        typeContrat: "CDI",
-        experienceRequise: "3-5 ans",
-        secteur: "Data",
-        salaire: "55k€ - 70k€",
-        description: "Rejoignez notre équipe Data pour développer des modèles prédictifs...",
-        competences: ["Python", "Machine Learning", "SQL", "TensorFlow", "Data Visualization"],
-        datePublication: "2025-03-15",
-        matching: 67
-      }
-    ];
-    
-    setOffres(mockOffres);
-    // Simuler des offres enregistrées
-    setOffresEnregistrees([1, 3]);
-  }, []);
+    // À remplacer par les appels Firebase
+    // Exemple:
+    // const fetchJobs = async () => {
+    //   try {
+    //     // Récupérer les offres d'emploi
+    //     const jobsRef = firebase.firestore().collection('jobs').where('status', '==', 'active');
+    //     const snapshot = await jobsRef.get();
+    //     const fetchedJobs = snapshot.docs.map(doc => ({
+    //       id: doc.id,
+    //       ...doc.data()
+    //     }));
+    //     setOffres(fetchedJobs);
+    //     
+    //     // Récupérer les offres enregistrées par l'utilisateur
+    //     if (currentUser) {
+    //       const savedJobsRef = firebase.firestore()
+    //         .collection('savedJobs')
+    //         .where('candidateId', '==', currentUser.uid);
+    //       const savedJobsSnapshot = await savedJobsRef.get();
+    //       const savedJobIds = savedJobsSnapshot.docs.map(doc => doc.data().jobId);
+    //       setOffresEnregistrees(savedJobIds);
+    //     }
+    //   } catch (error) {
+    //     console.error('Erreur lors du chargement des offres:', error);
+    //   }
+    // };
+    // 
+    // fetchJobs();
+  }, [currentUser]);
 
   // Gérer les changements de filtres
   const handleFiltreChange = (e) => {
@@ -143,21 +88,21 @@ const OffresEmploi = () => {
 
   // Filtrer les offres selon les critères
   const offresFiltrees = offres.filter(offre => {
-    const matchRecherche = offre.titre.toLowerCase().includes(filtres.recherche.toLowerCase()) || 
-                          offre.entreprise.toLowerCase().includes(filtres.recherche.toLowerCase()) ||
-                          offre.competences.some(competence => competence.toLowerCase().includes(filtres.recherche.toLowerCase()));
+    const matchRecherche = offre.titre?.toLowerCase().includes(filtres.recherche.toLowerCase()) || 
+                          offre.entreprise?.toLowerCase().includes(filtres.recherche.toLowerCase()) ||
+                          offre.competences?.some(competence => competence.toLowerCase().includes(filtres.recherche.toLowerCase()));
     
-    const matchLocalisation = !filtres.localisation || offre.localisation.toLowerCase().includes(filtres.localisation.toLowerCase());
+    const matchLocalisation = !filtres.localisation || offre.localisation?.toLowerCase().includes(filtres.localisation.toLowerCase());
     
     const matchTypeContrat = filtres.typeContrat === 'tous' || offre.typeContrat === filtres.typeContrat;
     
     const matchExperience = filtres.experienceMin === 'tous' || 
-                           (filtres.experienceMin === '0-2' && offre.experienceRequise.includes('0-2')) ||
+                           (filtres.experienceMin === '0-2' && offre.experienceRequise?.includes('0-2')) ||
                            (filtres.experienceMin === '2-5' && 
-                             (offre.experienceRequise.includes('2-') || 
-                              offre.experienceRequise.includes('3-') ||
-                              offre.experienceRequise.includes('4-'))) ||
-                           (filtres.experienceMin === '5+' && offre.experienceRequise.includes('5+'));
+                             (offre.experienceRequise?.includes('2-') || 
+                              offre.experienceRequise?.includes('3-') ||
+                              offre.experienceRequise?.includes('4-'))) ||
+                           (filtres.experienceMin === '5+' && offre.experienceRequise?.includes('5+'));
     
     const matchSecteur = filtres.secteur === 'tous' || offre.secteur === filtres.secteur;
     
@@ -165,7 +110,44 @@ const OffresEmploi = () => {
   });
 
   // Basculer une offre comme enregistrée/non-enregistrée
-  const toggleOffreEnregistree = (offerId) => {
+  const toggleOffreEnregistree = async (offerId) => {
+    // À remplacer par l'appel Firebase
+    // Exemple:
+    // try {
+    //   if (!currentUser) {
+    //     navigate('/login');
+    //     return;
+    //   }
+    //   
+    //   if (offresEnregistrees.includes(offerId)) {
+    //     // Supprimer de la liste des offres enregistrées
+    //     const savedJobRef = firebase.firestore()
+    //       .collection('savedJobs')
+    //       .where('candidateId', '==', currentUser.uid)
+    //       .where('jobId', '==', offerId);
+    //     const snapshot = await savedJobRef.get();
+    //     
+    //     // Supprimer le document
+    //     if (!snapshot.empty) {
+    //       await snapshot.docs[0].ref.delete();
+    //     }
+    //     
+    //     setOffresEnregistrees(prev => prev.filter(id => id !== offerId));
+    //   } else {
+    //     // Ajouter à la liste des offres enregistrées
+    //     await firebase.firestore().collection('savedJobs').add({
+    //       candidateId: currentUser.uid,
+    //       jobId: offerId,
+    //       savedAt: firebase.firestore.FieldValue.serverTimestamp()
+    //     });
+    //     
+    //     setOffresEnregistrees(prev => [...prev, offerId]);
+    //   }
+    // } catch (error) {
+    //   console.error('Erreur lors de l\'enregistrement de l\'offre:', error);
+    // }
+    
+    // Temporaire (à remplacer par le code Firebase ci-dessus)
     if (offresEnregistrees.includes(offerId)) {
       setOffresEnregistrees(prev => prev.filter(id => id !== offerId));
     } else {
@@ -175,6 +157,7 @@ const OffresEmploi = () => {
 
   // Formater la date de publication
   const formatDate = (dateString) => {
+    if (!dateString) return '';
     const options = { day: 'numeric', month: 'long' };
     return new Date(dateString).toLocaleDateString('fr-FR', options);
   };
@@ -434,7 +417,7 @@ const OffresEmploi = () => {
                         </div>
                         <p className="offre-description">{offre.description}</p>
                         <div className="offre-competences">
-                          {offre.competences.map((competence, index) => (
+                          {offre.competences && offre.competences.map((competence, index) => (
                             <span key={index} className="competence-tag">{competence}</span>
                           ))}
                         </div>

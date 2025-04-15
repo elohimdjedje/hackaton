@@ -17,6 +17,10 @@ import CVAnalysis from './pages/CVAnalysis';
 import MesCandidatures from './pages/MesCandidatures';
 import OffresEmploi from './pages/OffresEmploi';
 import Messages from './pages/Messages';
+import HomePage from './pages/HomePage';
+import JobDetail from './pages/JobDetail';
+import CompanyDetail from './pages/CompanyDetail';
+import UserProfile from './pages/UserProfile';
 
 // Composant pour les routes protégées
 const ProtectedRoute = ({ children, allowedTypes }) => {
@@ -39,12 +43,14 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Routes publiques */}
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/recruiter-signup" element={<RecruiterSignup />} />
           <Route path="/candidate-signup" element={<CandidateSignup />} />
           <Route path="/demo" element={<TalentMatchDemo />} />
           <Route path="/linkedin-callback" element={<LinkedInCallback />} />
+          <Route path="/offres-emploi/:id" element={<JobDetail />} />
+          <Route path="/entreprises/:id" element={<CompanyDetail />} />
 
           {/* Routes protégées pour recruteurs */}
           <Route 
@@ -129,6 +135,17 @@ function App() {
               </ProtectedRoute>
             } 
           />
+
+          {/* Route commune pour le profil */}
+          <Route 
+            path="/user-profile" 
+            element={
+              <ProtectedRoute allowedTypes={['candidate', 'recruiter']}>
+                <UserProfile />
+              </ProtectedRoute>
+            } 
+          />
+
           <Route 
             path="/messages" 
             element={
@@ -145,7 +162,7 @@ function App() {
           />
 
           {/* Redirection par défaut */}
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </AuthProvider>
     </Router>

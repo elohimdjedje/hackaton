@@ -1,0 +1,104 @@
+/* Styles pour la page de profil utilisateur */
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 0;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+    color: rgba(140, 82, 255, 0.3);
+    margin-bottom: 1rem;
+  }
+  
+  .empty-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #8c52ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .empty-action-btn:hover {
+    background-color: #7541e0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(140, 82, 255, 0.4);
+  }
+  
+  .security-section {
+    background-color: rgba(40, 40, 60, 0.5);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .security-section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  
+  .security-section p {
+    color: #b8b8b8;
+    margin-bottom: 1rem;
+  }
+  
+  .security-btn {
+    background-color: rgba(140, 82, 255, 0.2);
+    color: #8c52ff;
+    border: 1px solid #8c52ff;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .security-btn:hover {
+    background-color: rgba(140, 82, 255, 0.3);
+  }
+  
+  .security-btn.danger {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border-color: #e74c3c;
+  }
+  
+  .security-btn.danger:hover {
+    background-color: rgba(231, 76, 60, 0.2);
+  }
+  
+  .session-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .session-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .session-info i {
+    font-size: 1.5rem;
+    color: #8c52ff;
+  }
+  
+  .current-session {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
