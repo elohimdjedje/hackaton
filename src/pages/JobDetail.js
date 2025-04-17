@@ -9,6 +9,7 @@ const JobDetail = () => {
   const [stars, setStars] = useState([]);
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [applicationSubmitted, setApplicationSubmitted] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [similarJobs, setSimilarJobs] = useState([]);
@@ -111,6 +112,16 @@ const JobDetail = () => {
   const toggleSaveJob = () => {
     setIsSaved(!isSaved);
     // Dans une app réelle, ajouter/supprimer l'offre des favoris dans la base de données
+  };
+  const handleSubmitApplication = () => {
+    // Simuler un délai pour l'envoi
+    setTimeout(() => {
+      setApplicationSubmitted(true);
+      setTimeout(() => {
+        setShowApplyModal(false);
+        alert("Votre candidature a été envoyée avec succès!");
+      }, 1500);
+    }, 1000);
   };
   
   const handleApply = () => {
@@ -373,7 +384,9 @@ const JobDetail = () => {
                   </div>
                   <div className="modal-footer">
                     <button className="cancel-btn" onClick={() => setShowApplyModal(false)}>Annuler</button>
-                    <button className="submit-btn">Envoyer ma candidature</button>
+                    <button className="submit-btn" onClick={handleSubmitApplication}>
+                      {applicationSubmitted ? 'Envoi en cours...' : 'Envoyer ma candidature'}
+                    </button>
                   </div>
                 </div>
               </div>

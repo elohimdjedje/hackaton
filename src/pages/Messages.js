@@ -344,9 +344,14 @@ const Messages = () => {
     
     if (newMessage.trim() === '' || !activeContact) return;
     
+    // Créer un nouvel ID unique
+    const newId = messages.length > 0 
+      ? Math.max(...messages.map(msg => msg.id)) + 1 
+      : 1;
+    
     // Créer un nouveau message
     const newMsg = {
-      id: messages.length + 1,
+      id: newId,
       contactId: activeContact.id,
       expediteur: "moi",
       contenu: newMessage,
@@ -369,6 +374,33 @@ const Messages = () => {
       return contact;
     });
     setContacts(updatedContacts);
+    
+    // Simuler une réponse automatique après 2 secondes
+    setTimeout(() => {
+      const replyId = newId + 1;
+      const autoReply = {
+        id: replyId,
+        contactId: activeContact.id,
+        expediteur: "contact",
+        contenu: `Merci pour votre message. Je vous réponds dans les plus brefs délais.`,
+        date: new Date().toISOString(),
+        lu: false
+      };
+      setMessages(prevMessages => [...prevMessages, autoReply]);
+      
+      // Mettre à jour les contacts avec le nouveau message
+      setContacts(contacts.map(contact => {
+        if (contact.id === activeContact.id) {
+          return {
+            ...contact,
+            dernierMessage: autoReply.contenu,
+            dateMessage: autoReply.date,
+            nonLu: 1
+          };
+        }
+        return contact;
+      }));
+    }, 2000);
     
     // Réinitialiser le champ de texte
     setNewMessage('');

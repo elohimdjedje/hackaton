@@ -150,8 +150,10 @@ const OffresEmploi = () => {
     // Temporaire (à remplacer par le code Firebase ci-dessus)
     if (offresEnregistrees.includes(offerId)) {
       setOffresEnregistrees(prev => prev.filter(id => id !== offerId));
+      alert("Offre retirée de vos favoris");
     } else {
       setOffresEnregistrees(prev => [...prev, offerId]);
+      alert("Offre ajoutée à vos favoris");
     }
   };
 

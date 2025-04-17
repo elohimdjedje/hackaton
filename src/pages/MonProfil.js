@@ -3,106 +3,25 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const MonProfil = () => {
-  // eslint-disable-next-line no-unused-vars
   const { currentUser } = useAuth();
   const [stars, setStars] = useState([]);
   const [activeSection, setActiveSection] = useState('infos');
-  const [infoPerso, setInfoPerso] = useState({
-    prenom: 'Jean',
-    nom: 'Dupont',
-    poste: 'Développeur Full Stack',
-    email: 'jean.dupont@example.com',
-    telephone: '+33 6 12 34 56 78',
-    localisation: 'Paris, France',
-    disponibilite: 'Immédiate',
-    siteWeb: 'jeandupont.fr',
-    linkedin: 'linkedin.com/in/jeandupont',
-    github: 'github.com/jeandupont',
-    photo: null
+  const [editMode, setEditMode] = useState(false);
+  
+  // États initialisés vides, à remplir avec les données du CV
+  const [profileData, setProfileData] = useState({
+    firstName: '',
+    lastName: '',
+    headline: '',
+    location: '',
+    email: '',
+    phone: ''
   });
-  const [mode, setMode] = useState('visualisation');
   
-  // eslint-disable-next-line no-unused-vars
-  const [experiences, setExperiences] = useState([
-    {
-      id: 1,
-      poste: 'Développeur Full Stack',
-      entreprise: 'TechVision',
-      localisation: 'Paris, France',
-      dateDebut: '2023-01',
-      dateFin: null,
-      description: "Développement d'applications web en utilisant React, Node.js et MongoDB. Mise en place de CI/CD avec GitHub Actions. Participation à la conception de l'architecture technique."
-    },
-    {
-      id: 2,
-      poste: 'Développeur Frontend',
-      entreprise: 'DigitalSoft',
-      localisation: 'Lyon, France',
-      dateDebut: '2021-03',
-      dateFin: '2022-12',
-      description: "Développement d'interfaces utilisateur avec React et Redux. Collaboration avec l'équipe design pour implémenter les maquettes. Optimisation des performances des applications."
-    },
-    {
-      id: 3,
-      poste: 'Développeur Web Junior',
-      entreprise: 'StartupInno',
-      localisation: 'Bordeaux, France',
-      dateDebut: '2019-09',
-      dateFin: '2021-02',
-      description: "Développement de sites web responsifs en utilisant HTML, CSS et JavaScript. Intégration de CMS comme WordPress."
-    }
-  ]);
-  
-  // eslint-disable-next-line no-unused-vars
-  const [formations, setFormations] = useState([
-    {
-      id: 1,
-      diplome: "Master en Développement Web",
-      etablissement: "Université Paris Tech",
-      localisation: "Paris, France",
-      dateDebut: "2017-09",
-      dateFin: "2019-07",
-      description: "Spécialisation en développement web et applications mobiles."
-    },
-    {
-      id: 2,
-      diplome: "Licence Informatique",
-      etablissement: "Université de Bordeaux",
-      localisation: "Bordeaux, France",
-      dateDebut: "2014-09",
-      dateFin: "2017-06",
-      description: "Formation généraliste en informatique, algorithmes et programmation."
-    }
-  ]);
-  
-  // eslint-disable-next-line no-unused-vars
-  const [competences, setCompetences] = useState([
-    { id: 1, nom: "JavaScript", niveau: 90 },
-    { id: 2, nom: "React", niveau: 85 },
-    { id: 3, nom: "Node.js", niveau: 80 },
-    { id: 4, nom: "MongoDB", niveau: 75 },
-    { id: 5, nom: "Express", niveau: 80 },
-    { id: 6, nom: "HTML/CSS", niveau: 90 },
-    { id: 7, nom: "Git", niveau: 85 },
-    { id: 8, nom: "Docker", niveau: 70 },
-    { id: 9, nom: "AWS", niveau: 65 },
-    { id: 10, nom: "TypeScript", niveau: 75 }
-  ]);
-  
-  // eslint-disable-next-line no-unused-vars
-  const [langues, setLangues] = useState([
-    { id: 1, nom: "Français", niveau: "Langue maternelle" },
-    { id: 2, nom: "Anglais", niveau: "Courant" },
-    { id: 3, nom: "Espagnol", niveau: "Intermédiaire" }
-  ]);
-  
-  const [visibiliteParams, setVisibiliteParams] = useState({
-    profil: 'public',
-    telephone: 'contacts',
-    email: 'public',
-    experiencesDetails: 'public',
-    formationsDetails: 'public'
-  });
+  const [experiences, setExperiences] = useState([]);
+  const [formations, setFormations] = useState([]);
+  const [competences, setCompetences] = useState([]);
+  const [langues, setLangues] = useState([]);
 
   // Génération des étoiles pour le background
   useEffect(() => {
@@ -123,35 +42,176 @@ const MonProfil = () => {
     generateStars();
   }, []);
 
-  // Formater la date
+  // Récupérer les données extraites du CV lors du chargement
+  useEffect(() => {
+    // Simuler la récupération des données extraites du CV
+    const fetchCVData = async () => {
+      try {
+        // Dans une application réelle, ces données viendraient du contexte d'authentification
+        // ou d'une API après l'analyse du CV
+        
+        // Simuler un délai de chargement
+        setTimeout(() => {
+          // Données personnelles
+          setProfileData({
+            firstName: currentUser?.profile?.firstName || 'Jean',
+            lastName: currentUser?.profile?.lastName || 'Dupont',
+            headline: 'Développeur Full Stack',
+            location: 'Paris, France',
+            email: currentUser?.email || 'jean.dupont@example.com',
+            phone: '+33 6 12 34 56 78'
+          });
+          
+          // Expériences extraites du CV
+          setExperiences([
+            {
+              id: 1,
+              poste: "Développeur Full Stack",
+              entreprise: "TechVision",
+              localisation: "Paris",
+              dateDebut: "2021-01",
+              dateFin: null,
+              description: "Développement d'applications web utilisant React et Node.js"
+            },
+            {
+              id: 2,
+              poste: "Développeur Frontend",
+              entreprise: "WebStudio",
+              localisation: "Lyon",
+              dateDebut: "2019-03",
+              dateFin: "2020-12",
+              description: "Création d'interfaces utilisateur avec React et Redux"
+            }
+          ]);
+          
+          // Formations extraites du CV
+          setFormations([
+            {
+              id: 1,
+              diplome: "Master en Développement Web",
+              etablissement: "Université Paris Tech",
+              localisation: "Paris",
+              dateDebut: "2017-09",
+              dateFin: "2019-06"
+            },
+            {
+              id: 2,
+              diplome: "Licence en Informatique",
+              etablissement: "Université de Lyon",
+              localisation: "Lyon",
+              dateDebut: "2014-09",
+              dateFin: "2017-06"
+            }
+          ]);
+          
+          // Compétences extraites du CV
+          setCompetences([
+            { id: 1, nom: "React", niveau: 90 },
+            { id: 2, nom: "Node.js", niveau: 85 },
+            { id: 3, nom: "JavaScript", niveau: 95 },
+            { id: 4, nom: "MongoDB", niveau: 80 },
+            { id: 5, nom: "TypeScript", niveau: 75 },
+            { id: 6, nom: "CSS/SASS", niveau: 85 }
+          ]);
+          
+          // Langues extraites du CV
+          setLangues([
+            { id: 1, langue: "Français", niveau: "Langue maternelle" },
+            { id: 2, langue: "Anglais", niveau: "Courant" },
+            { id: 3, langue: "Espagnol", niveau: "Intermédiaire" }
+          ]);
+        }, 500);
+        
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données du CV:", error);
+      }
+    };
+    
+    fetchCVData();
+  }, [currentUser]);
+
   const formatDate = (dateString) => {
     if (!dateString) return 'Présent';
     
-    const [year, month] = dateString.split('-');
-    const months = [
-      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
-    ];
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long' };
+    return date.toLocaleDateString('fr-FR', options);
+  };
+  
+  const handleEditProfile = () => {
+    setEditMode(true);
+  };
+  
+  const handleSaveProfile = () => {
+    setEditMode(false);
+    alert("Profil mis à jour avec succès!");
+  };
+  
+  const addExperience = () => {
+    const newExperience = {
+      id: experiences.length + 1,
+      poste: "Nouveau poste",
+      entreprise: "Nouvelle entreprise",
+      localisation: "Localisation",
+      dateDebut: "2023-01",
+      dateFin: null,
+      description: "Description de votre expérience"
+    };
     
-    return `${months[parseInt(month) - 1]} ${year}`;
+    setExperiences([...experiences, newExperience]);
   };
-
-  // Gérer la soumission du formulaire
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setMode('visualisation');
-    // Ici, vous ajouteriez la logique pour enregistrer les modifications
+  
+  const deleteExperience = (id) => {
+    setExperiences(experiences.filter(exp => exp.id !== id));
   };
-
-  // Changer de section
-  const handleSectionChange = (section) => {
-    setActiveSection(section);
-    setMode('visualisation');
+  
+  const addFormation = () => {
+    const newFormation = {
+      id: formations.length + 1,
+      diplome: "Nouveau diplôme",
+      etablissement: "Nouvel établissement",
+      localisation: "Localisation",
+      dateDebut: "2022-01",
+      dateFin: "2023-01"
+    };
+    
+    setFormations([...formations, newFormation]);
+  };
+  
+  const deleteFormation = (id) => {
+    setFormations(formations.filter(form => form.id !== id));
+  };
+  
+  const addCompetence = () => {
+    const newCompetence = {
+      id: competences.length + 1,
+      nom: "Nouvelle compétence",
+      niveau: 50
+    };
+    
+    setCompetences([...competences, newCompetence]);
+  };
+  
+  const deleteCompetence = (id) => {
+    setCompetences(competences.filter(comp => comp.id !== id));
+  };
+  
+  const addLangue = () => {
+    const newLangue = {
+      id: langues.length + 1,
+      langue: "Nouvelle langue",
+      niveau: "Intermédiaire"
+    };
+    
+    setLangues([...langues, newLangue]);
+  };
+  
+  const deleteLangue = (id) => {
+    setLangues(langues.filter(langue => langue.id !== id));
   };
 
   return (
     <div className="dashboard-container">
-      {/* Background stars */}
       <div className="stars">
         {stars.map((star) => (
           <div
@@ -168,7 +228,6 @@ const MonProfil = () => {
         ))}
       </div>
 
-      {/* Top navigation */}
       <header className="dashboard-header">
         <div className="header-logo">
           <Link to="/" className="logo">
@@ -183,21 +242,17 @@ const MonProfil = () => {
           <Link to="/conseils" className="nav-link">Conseils</Link>
         </nav>
         <div className="header-actions">
-          <div className="notifications">
-            <div className="notification-icon">
-              <span className="notification-badge">3</span>
-              <i className="far fa-bell"></i>
-            </div>
+          <div className="notification-icon">
+            <span className="notification-badge">2</span>
+            <i className="far fa-bell"></i>
           </div>
           <div className="user-avatar">
-            JD
+            {profileData.firstName?.charAt(0) || ''}{profileData.lastName?.charAt(0) || ''}
           </div>
         </div>
       </header>
 
-      {/* Main content */}
       <div className="dashboard-content">
-        {/* Sidebar */}
         <aside className="dashboard-sidebar">
           <div className="sidebar-section">
             <h3 className="sidebar-heading">PRINCIPAL</h3>
@@ -247,26 +302,19 @@ const MonProfil = () => {
           </div>
         </aside>
 
-        {/* Main profile */}
         <main className="dashboard-main">
           <div className="profile-container">
-            {/* En-tête du profil */}
             <div className="profile-header">
               <div className="profile-photo">
-                {infoPerso.photo ? (
-                  <img src={infoPerso.photo} alt="Profile" className="profile-img" />
-                ) : (
-                  <div className="profile-initials">
-                    {infoPerso.prenom.charAt(0)}{infoPerso.nom.charAt(0)}
-                  </div>
-                )}
+                <div className="profile-initials">
+                  {profileData.firstName?.charAt(0) || ''}{profileData.lastName?.charAt(0) || ''}
+                </div>
               </div>
               <div className="profile-title">
-                <h1 className="profile-name">{infoPerso.prenom} {infoPerso.nom}</h1>
-                <p className="profile-poste">{infoPerso.poste}</p>
+                <h1 className="profile-name">{profileData.firstName} {profileData.lastName}</h1>
+                <p className="profile-poste">{profileData.headline}</p>
                 <p className="profile-localisation">
-                  <i className="fas fa-map-marker-alt"></i>
-                  {infoPerso.localisation}
+                  <i className="fas fa-map-marker-alt"></i> {profileData.location}
                 </p>
               </div>
               <div className="profile-actions">
@@ -285,466 +333,331 @@ const MonProfil = () => {
               </div>
             </div>
 
-            {/* Navigation du profil */}
             <div className="profile-nav">
               <button 
                 className={`profile-nav-btn ${activeSection === 'infos' ? 'active' : ''}`}
-                onClick={() => handleSectionChange('infos')}
+                onClick={() => setActiveSection('infos')}
               >
                 <i className="fas fa-user"></i>
                 Informations
               </button>
               <button 
                 className={`profile-nav-btn ${activeSection === 'experiences' ? 'active' : ''}`}
-                onClick={() => handleSectionChange('experiences')}
+                onClick={() => setActiveSection('experiences')}
               >
                 <i className="fas fa-briefcase"></i>
                 Expériences
               </button>
               <button 
                 className={`profile-nav-btn ${activeSection === 'formations' ? 'active' : ''}`}
-                onClick={() => handleSectionChange('formations')}
+                onClick={() => setActiveSection('formations')}
               >
                 <i className="fas fa-graduation-cap"></i>
                 Formations
               </button>
               <button 
                 className={`profile-nav-btn ${activeSection === 'competences' ? 'active' : ''}`}
-                onClick={() => handleSectionChange('competences')}
+                onClick={() => setActiveSection('competences')}
               >
                 <i className="fas fa-code"></i>
                 Compétences
               </button>
               <button 
                 className={`profile-nav-btn ${activeSection === 'langues' ? 'active' : ''}`}
-                onClick={() => handleSectionChange('langues')}
+                onClick={() => setActiveSection('langues')}
               >
                 <i className="fas fa-language"></i>
                 Langues
               </button>
-              <button 
-                className={`profile-nav-btn ${activeSection === 'visibilite' ? 'active' : ''}`}
-                onClick={() => handleSectionChange('visibilite')}
-              >
-                <i className="fas fa-lock"></i>
-                Visibilité
-              </button>
             </div>
 
-            {/* Contenu du profil */}
             <div className="profile-content">
-              {/* Section Informations */}
               {activeSection === 'infos' && (
                 <div className="profile-section">
                   <div className="section-header">
                     <h2 className="section-title">Informations personnelles</h2>
-                    {mode === 'visualisation' ? (
-                      <button className="edit-btn" onClick={() => setMode('edition')}>
-                        <i className="fas fa-edit"></i>
-                        Modifier
-                      </button>
-                    ) : (
-                      <div className="edit-actions">
-                        <button className="cancel-btn" onClick={() => setMode('visualisation')}>
-                          Annuler
+                    <div>
+                      {!editMode ? (
+                        <button className="edit-btn" onClick={handleEditProfile}>
+                          <i className="fas fa-edit"></i>
+                          Modifier
                         </button>
-                        <button className="save-btn" onClick={handleSubmit}>
+                      ) : (
+                        <button className="submit-btn" onClick={handleSaveProfile}>
+                          <i className="fas fa-save"></i>
                           Enregistrer
                         </button>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                   
-                  {mode === 'visualisation' ? (
-                    <div className="info-grid">
-                      <div className="info-item">
-                        <span className="info-label">Prénom</span>
-                        <span className="info-value">{infoPerso.prenom}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Nom</span>
-                        <span className="info-value">{infoPerso.nom}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Poste actuel</span>
-                        <span className="info-value">{infoPerso.poste}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Email</span>
-                        <span className="info-value">{infoPerso.email}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Téléphone</span>
-                        <span className="info-value">{infoPerso.telephone}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Localisation</span>
-                        <span className="info-value">{infoPerso.localisation}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Disponibilité</span>
-                        <span className="info-value">{infoPerso.disponibilite}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">Site web</span>
-                        <span className="info-value">{infoPerso.siteWeb}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">LinkedIn</span>
-                        <span className="info-value">{infoPerso.linkedin}</span>
-                      </div>
-                      <div className="info-item">
-                        <span className="info-label">GitHub</span>
-                        <span className="info-value">{infoPerso.github}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <form className="edit-form">
+                  {editMode ? (
+                    <div className="edit-form">
                       <div className="form-row">
                         <div className="form-group">
                           <label>Prénom</label>
-                          <input
-                            type="text"
-                            value={infoPerso.prenom}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, prenom: e.target.value })}
+                          <input 
+                            type="text" 
+                            value={profileData.firstName}
+                            onChange={(e) => setProfileData({...profileData, firstName: e.target.value})}
                           />
                         </div>
                         <div className="form-group">
                           <label>Nom</label>
-                          <input
-                            type="text"
-                            value={infoPerso.nom}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, nom: e.target.value })}
+                          <input 
+                            type="text" 
+                            value={profileData.lastName}
+                            onChange={(e) => setProfileData({...profileData, lastName: e.target.value})}
                           />
                         </div>
                       </div>
-                      <div className="form-group">
-                        <label>Poste actuel</label>
-                        <input
-                          type="text"
-                          value={infoPerso.poste}
-                          onChange={(e) => setInfoPerso({ ...infoPerso, poste: e.target.value })}
-                        />
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label>Titre professionnel</label>
+                          <input 
+                            type="text" 
+                            value={profileData.headline}
+                            onChange={(e) => setProfileData({...profileData, headline: e.target.value})}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>Localisation</label>
+                          <input 
+                            type="text" 
+                            value={profileData.location}
+                            onChange={(e) => setProfileData({...profileData, location: e.target.value})}
+                          />
+                        </div>
                       </div>
                       <div className="form-row">
                         <div className="form-group">
                           <label>Email</label>
-                          <input
-                            type="email"
-                            value={infoPerso.email}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, email: e.target.value })}
+                          <input 
+                            type="email" 
+                            value={profileData.email}
+                            onChange={(e) => setProfileData({...profileData, email: e.target.value})}
                           />
                         </div>
                         <div className="form-group">
                           <label>Téléphone</label>
-                          <input
-                            type="tel"
-                            value={infoPerso.telephone}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, telephone: e.target.value })}
+                          <input 
+                            type="tel" 
+                            value={profileData.phone}
+                            onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
                           />
                         </div>
                       </div>
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label>Localisation</label>
-                          <input
-                            type="text"
-                            value={infoPerso.localisation}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, localisation: e.target.value })}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label>Disponibilité</label>
-                          <select
-                            value={infoPerso.disponibilite}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, disponibilite: e.target.value })}
-                          >
-                            <option value="Immédiate">Immédiate</option>
-                            <option value="Sous 1 mois">Sous 1 mois</option>
-                            <option value="Sous 3 mois">Sous 3 mois</option>
-                            <option value="Non disponible">Non disponible</option>
-                          </select>
-                        </div>
+                    </div>
+                  ) : (
+                    <div className="info-grid">
+                      <div className="info-item">
+                        <span className="info-label">Prénom</span>
+                        <span className="info-value">{profileData.firstName}</span>
                       </div>
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label>Site web</label>
-                          <input
-                            type="url"
-                            value={infoPerso.siteWeb}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, siteWeb: e.target.value })}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label>LinkedIn</label>
-                          <input
-                            type="url"
-                            value={infoPerso.linkedin}
-                            onChange={(e) => setInfoPerso({ ...infoPerso, linkedin: e.target.value })}
-                          />
-                        </div>
+                      <div className="info-item">
+                        <span className="info-label">Nom</span>
+                        <span className="info-value">{profileData.lastName}</span>
                       </div>
-                      <div className="form-group">
-                        <label>GitHub</label>
-                        <input
-                          type="url"
-                          value={infoPerso.github}
-                          onChange={(e) => setInfoPerso({ ...infoPerso, github: e.target.value })}
-                        />
+                      <div className="info-item">
+                        <span className="info-label">Titre professionnel</span>
+                        <span className="info-value">{profileData.headline}</span>
                       </div>
-                      <div className="form-group">
-                        <label>Photo de profil</label>
-                        <div className="photo-upload">
-                          <input type="file" id="photo-upload" className="hidden-input" />
-                          <label htmlFor="photo-upload" className="upload-btn">
-                            <i className="fas fa-upload"></i>
-                            Choisir une photo
-                          </label>
-                        </div>
+                      <div className="info-item">
+                        <span className="info-label">Localisation</span>
+                        <span className="info-value">{profileData.location}</span>
                       </div>
-                    </form>
+                      <div className="info-item">
+                        <span className="info-label">Email</span>
+                        <span className="info-value">{profileData.email}</span>
+                      </div>
+                      <div className="info-item">
+                        <span className="info-label">Téléphone</span>
+                        <span className="info-value">{profileData.phone}</span>
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
 
-              {/* Section Expériences */}
               {activeSection === 'experiences' && (
                 <div className="profile-section">
                   <div className="section-header">
                     <h2 className="section-title">Expériences professionnelles</h2>
-                    <button className="add-btn">
+                    <button className="add-btn" onClick={addExperience}>
                       <i className="fas fa-plus"></i>
                       Ajouter une expérience
                     </button>
                   </div>
                   
                   <div className="experiences-list">
-                    {experiences.map((exp) => (
-                      <div key={exp.id} className="experience-item">
-                        <div className="experience-header">
-                          <div className="experience-period">
-                            {formatDate(exp.dateDebut)} - {formatDate(exp.dateFin)}
+                    {experiences.length > 0 ? (
+                      experiences.map((exp) => (
+                        <div key={exp.id} className="experience-item">
+                          <div className="experience-header">
+                            <div className="experience-period">
+                              {formatDate(exp.dateDebut)} - {formatDate(exp.dateFin)}
                             </div>
-                          <div className="experience-actions">
-                            <button className="action-icon edit-icon">
-                              <i className="fas fa-edit"></i>
-                            </button>
-                            <button className="action-icon delete-icon">
-                              <i className="fas fa-trash"></i>
-                            </button>
+                            <div className="experience-actions">
+                              <button className="action-icon edit-icon">
+                                <i className="fas fa-edit"></i>
+                              </button>
+                              <button className="action-icon delete-icon" onClick={() => deleteExperience(exp.id)}>
+                                <i className="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <div className="experience-content">
+                            <h3 className="experience-poste">{exp.poste}</h3>
+                            <p className="experience-entreprise">{exp.entreprise} - {exp.localisation}</p>
+                            <p className="experience-description">{exp.description}</p>
                           </div>
                         </div>
-                        <div className="experience-content">
-                          <h3 className="experience-poste">{exp.poste}</h3>
-                          <p className="experience-entreprise">{exp.entreprise} - {exp.localisation}</p>
-                          <p className="experience-description">{exp.description}</p>
-                        </div>
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <i className="fas fa-briefcase empty-icon"></i>
+                        <p>Aucune expérience extraite de votre CV</p>
+                        <button className="empty-action-btn" onClick={addExperience}>
+                          <i className="fas fa-plus"></i>
+                          Ajouter une expérience
+                        </button>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Section Formations */}
               {activeSection === 'formations' && (
                 <div className="profile-section">
                   <div className="section-header">
-                    <h2 className="section-title">Formations</h2>
-                    <button className="add-btn">
+                    <h2 className="section-title">Formation</h2>
+                    <button className="add-btn" onClick={addFormation}>
                       <i className="fas fa-plus"></i>
                       Ajouter une formation
                     </button>
                   </div>
                   
                   <div className="formations-list">
-                    {formations.map((formation) => (
-                      <div key={formation.id} className="formation-item">
-                        <div className="formation-header">
-                          <div className="formation-period">
-                            {formatDate(formation.dateDebut)} - {formatDate(formation.dateFin)}
+                    {formations.length > 0 ? (
+                      formations.map((formation) => (
+                        <div key={formation.id} className="formation-item">
+                          <div className="formation-header">
+                            <div className="formation-period">
+                              {formatDate(formation.dateDebut)} - {formatDate(formation.dateFin)}
+                            </div>
+                            <div className="formation-actions">
+                              <button className="action-icon edit-icon">
+                                <i className="fas fa-edit"></i>
+                              </button>
+                              <button className="action-icon delete-icon" onClick={() => deleteFormation(formation.id)}>
+                                <i className="fas fa-trash"></i>
+                              </button>
+                            </div>
                           </div>
-                          <div className="formation-actions">
-                            <button className="action-icon edit-icon">
-                              <i className="fas fa-edit"></i>
-                            </button>
-                            <button className="action-icon delete-icon">
-                              <i className="fas fa-trash"></i>
-                            </button>
+                          <div className="formation-content">
+                            <h3 className="formation-diplome">{formation.diplome}</h3>
+                            <p className="formation-etablissement">{formation.etablissement} - {formation.localisation}</p>
                           </div>
                         </div>
-                        <div className="formation-content">
-                          <h3 className="formation-diplome">{formation.diplome}</h3>
-                          <p className="formation-etablissement">{formation.etablissement} - {formation.localisation}</p>
-                          <p className="formation-description">{formation.description}</p>
-                        </div>
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <i className="fas fa-graduation-cap empty-icon"></i>
+                        <p>Aucune formation extraite de votre CV</p>
+                        <button className="empty-action-btn" onClick={addFormation}>
+                          <i className="fas fa-plus"></i>
+                          Ajouter une formation
+                        </button>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Section Compétences */}
               {activeSection === 'competences' && (
                 <div className="profile-section">
                   <div className="section-header">
-                    <h2 className="section-title">Compétences techniques</h2>
-                    <button className="add-btn">
+                    <h2 className="section-title">Compétences</h2>
+                    <button className="add-btn" onClick={addCompetence}>
                       <i className="fas fa-plus"></i>
                       Ajouter une compétence
                     </button>
                   </div>
                   
                   <div className="competences-grid">
-                    {competences.map((competence) => (
-                      <div key={competence.id} className="competence-item">
-                        <div className="competence-header">
-                          <h3 className="competence-nom">{competence.nom}</h3>
-                          <div className="competence-actions">
-                            <button className="action-icon edit-icon">
-                              <i className="fas fa-edit"></i>
-                            </button>
-                            <button className="action-icon delete-icon">
-                              <i className="fas fa-trash"></i>
-                            </button>
+                    {competences.length > 0 ? (
+                      competences.map((competence) => (
+                        <div key={competence.id} className="competence-item">
+                          <div className="competence-header">
+                            <h3 className="competence-nom">{competence.nom}</h3>
+                            <div className="competence-actions">
+                              <button className="action-icon edit-icon">
+                                <i className="fas fa-edit"></i>
+                              </button>
+                              <button className="action-icon delete-icon" onClick={() => deleteCompetence(competence.id)}>
+                                <i className="fas fa-trash"></i>
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                        <div className="competence-niveau">
                           <div className="niveau-bar">
                             <div 
                               className="niveau-progress" 
                               style={{ width: `${competence.niveau}%` }}
                             ></div>
                           </div>
-                          <span className="niveau-value">{competence.niveau}%</span>
+                          <div className="niveau-value">{competence.niveau}%</div>
                         </div>
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <i className="fas fa-code empty-icon"></i>
+                        <p>Aucune compétence extraite de votre CV</p>
+                        <button className="empty-action-btn" onClick={addCompetence}>
+                          <i className="fas fa-plus"></i>
+                          Ajouter une compétence
+                        </button>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Section Langues */}
               {activeSection === 'langues' && (
                 <div className="profile-section">
                   <div className="section-header">
                     <h2 className="section-title">Langues</h2>
-                    <button className="add-btn">
+                    <button className="add-btn" onClick={addLangue}>
                       <i className="fas fa-plus"></i>
                       Ajouter une langue
                     </button>
                   </div>
                   
                   <div className="langues-list">
-                    {langues.map((langue) => (
-                      <div key={langue.id} className="langue-item">
-                        <h3 className="langue-nom">{langue.nom}</h3>
-                        <span className="langue-niveau">{langue.niveau}</span>
-                        <div className="langue-actions">
-                          <button className="action-icon edit-icon">
-                            <i className="fas fa-edit"></i>
-                          </button>
-                          <button className="action-icon delete-icon">
-                            <i className="fas fa-trash"></i>
-                          </button>
+                    {langues.length > 0 ? (
+                      langues.map((langue) => (
+                        <div key={langue.id} className="langue-item">
+                          <h3 className="langue-nom">{langue.langue}</h3>
+                          <div className="langue-actions">
+                            <button className="action-icon edit-icon">
+                              <i className="fas fa-edit"></i>
+                            </button>
+                            <button className="action-icon delete-icon" onClick={() => deleteLangue(langue.id)}>
+                              <i className="fas fa-trash"></i>
+                            </button>
+                          </div>
+                          <span className="langue-niveau">{langue.niveau}</span>
                         </div>
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <i className="fas fa-language empty-icon"></i>
+                        <p>Aucune langue extraite de votre CV</p>
+                        <button className="empty-action-btn" onClick={addLangue}>
+                          <i className="fas fa-plus"></i>
+                          Ajouter une langue
+                        </button>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Section Visibilité */}
-              {activeSection === 'visibilite' && (
-                <div className="profile-section">
-                  <div className="section-header">
-                    <h2 className="section-title">Paramètres de visibilité</h2>
-                    <button className="save-btn">
-                      <i className="fas fa-save"></i>
-                      Enregistrer
-                    </button>
-                  </div>
-                  
-                  <div className="visibilite-options">
-                    <div className="visibilite-item">
-                      <div className="visibilite-info">
-                        <h3 className="visibilite-titre">Profil</h3>
-                        <p className="visibilite-description">Qui peut voir votre profil ?</p>
-                      </div>
-                      <div className="visibilite-control">
-                        <select 
-                          value={visibiliteParams.profil}
-                          onChange={(e) => setVisibiliteParams({ ...visibiliteParams, profil: e.target.value })}
-                        >
-                          <option value="public">Tout le monde</option>
-                          <option value="contacts">Mes contacts uniquement</option>
-                          <option value="prive">Privé (Vous uniquement)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="visibilite-item">
-                      <div className="visibilite-info">
-                        <h3 className="visibilite-titre">Numéro de téléphone</h3>
-                        <p className="visibilite-description">Qui peut voir votre numéro de téléphone ?</p>
-                      </div>
-                      <div className="visibilite-control">
-                        <select 
-                          value={visibiliteParams.telephone}
-                          onChange={(e) => setVisibiliteParams({ ...visibiliteParams, telephone: e.target.value })}
-                        >
-                          <option value="public">Tout le monde</option>
-                          <option value="contacts">Mes contacts uniquement</option>
-                          <option value="prive">Privé (Vous uniquement)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="visibilite-item">
-                      <div className="visibilite-info">
-                        <h3 className="visibilite-titre">Adresse email</h3>
-                        <p className="visibilite-description">Qui peut voir votre adresse email ?</p>
-                      </div>
-                      <div className="visibilite-control">
-                        <select 
-                          value={visibiliteParams.email}
-                          onChange={(e) => setVisibiliteParams({ ...visibiliteParams, email: e.target.value })}
-                        >
-                          <option value="public">Tout le monde</option>
-                          <option value="contacts">Mes contacts uniquement</option>
-                          <option value="prive">Privé (Vous uniquement)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="visibilite-item">
-                      <div className="visibilite-info">
-                        <h3 className="visibilite-titre">Détails des expériences</h3>
-                        <p className="visibilite-description">Qui peut voir les détails de vos expériences ?</p>
-                      </div>
-                      <div className="visibilite-control">
-                        <select 
-                          value={visibiliteParams.experiencesDetails}
-                          onChange={(e) => setVisibiliteParams({ ...visibiliteParams, experiencesDetails: e.target.value })}
-                        >
-                          <option value="public">Tout le monde</option>
-                          <option value="contacts">Mes contacts uniquement</option>
-                          <option value="prive">Privé (Vous uniquement)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="visibilite-item">
-                      <div className="visibilite-info">
-                        <h3 className="visibilite-titre">Détails des formations</h3>
-                        <p className="visibilite-description">Qui peut voir les détails de vos formations ?</p>
-                      </div>
-                      <div className="visibilite-control">
-                        <select 
-                          value={visibiliteParams.formationsDetails}
-                          onChange={(e) => setVisibiliteParams({ ...visibiliteParams, formationsDetails: e.target.value })}
-                        >
-                          <option value="public">Tout le monde</option>
-                          <option value="contacts">Mes contacts uniquement</option>
-                          <option value="prive">Privé (Vous uniquement)</option>
-                        </select>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               )}

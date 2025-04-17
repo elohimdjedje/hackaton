@@ -92,10 +92,24 @@ const RecruiterApplications = () => {
   // Gérer les changements de statut
   const handleStatusChange = (id, newStatus) => {
     setApplications(prev => 
-      prev.map(app => 
-        app.id === id ? { ...app, statut: newStatus } : app
-      )
+      prev.map(app => {
+        if (app.id === id) {
+          // Si on accepte une candidature, programmer un entretien automatiquement
+          if (newStatus === 'accepte') {
+            return { 
+              ...app, 
+              statut: newStatus,
+              entretienDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // date dans 7 jours
+            };
+          }
+          return { ...app, statut: newStatus };
+        }
+        return app;
+      })
     );
+    
+    // Afficher une notification
+    alert(`Statut de la candidature mis à jour: ${formatStatus(newStatus)}`);
   };
 
   // Gérer la planification d'entretien
