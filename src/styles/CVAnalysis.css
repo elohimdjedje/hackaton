@@ -1,0 +1,449 @@
+/* Styles pour la page d'analyse de CV */
+.dashboard-container {
+    min-height: 100vh;
+    background-color: #0f1123;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Animation des étoiles en arrière-plan */
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  
+  .star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+  }
+  
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+  }
+  
+  /* Conteneur principal */
+  .cv-analysis-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 80px);
+    padding: 2rem 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .cv-analysis-card {
+    background-color: rgba(20, 22, 42, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    width: 100%;
+    max-width: 900px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .cv-analysis-card h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #6e57ff, #8a64ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Section de téléchargement */
+  .upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .upload-description {
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  
+  .upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgba(30, 32, 60, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px dashed #6e57ff;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .hidden-input {
+    display: none;
+  }
+  
+  .upload-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    padding: 1rem;
+    transition: transform 0.2s;
+  }
+  
+  .upload-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .upload-btn i {
+    font-size: 3rem;
+    color: #6e57ff;
+  }
+  
+  .upload-btn span {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  
+  .upload-formats {
+    color: #a3a8f0;
+    font-size: 0.9rem;
+  }
+  
+  .alternative-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .options-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    background-color: rgba(30, 32, 60, 0.5);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .option-btn:hover {
+    background-color: rgba(40, 42, 80, 0.7);
+    transform: translateY(-3px);
+  }
+  
+  .linkedin-btn {
+    border: 1px solid #0077b5;
+  }
+  
+  .linkedin-btn i {
+    color: #0077b5;
+  }
+  
+  .manual-btn {
+    border: 1px solid #6e57ff;
+  }
+  
+  .manual-btn i {
+    color: #6e57ff;
+  }
+  
+  /* Section de progression */
+  .analysis-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .analysis-progress h3 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  
+  .progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: rgba(30, 32, 60, 0.5);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #6e57ff, #8a64ff);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+  }
+  
+  .analysis-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .analysis-step {
+    color: #a3a8f0;
+  }
+  
+  .analysis-percentage {
+    font-weight: 600;
+    color: #6e57ff;
+  }
+  
+  /* Section des résultats */
+  .analysis-results {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .analysis-success {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .success-icon {
+    font-size: 2rem;
+    color: #4caf50;
+  }
+  
+  .analysis-success h3 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  /* Section des compétences */
+  .skills-section {
+    background-color: rgba(30, 32, 60, 0.5);
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+  
+  .skills-section h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .skill-name {
+    font-weight: 600;
+  }
+  
+  .skill-level {
+    color: #a3a8f0;
+  }
+  
+  .skill-bar {
+    height: 8px;
+    background-color: rgba(20, 22, 42, 0.8);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #6e57ff, #8a64ff);
+    border-radius: 4px;
+  }
+  
+  /* Section des offres correspondantes */
+  .matching-jobs-section {
+    background-color: rgba(30, 32, 60, 0.5);
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+  
+  .matching-jobs-section h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .matching-jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .matching-job-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(20, 22, 42, 0.8);
+    border-radius: 10px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .matching-job-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .job-info {
+    flex: 1;
+  }
+  
+  .job-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #fff;
+  }
+  
+  .job-company {
+    font-size: 1rem;
+    color: #a3a8f0;
+    margin: 0 0 0.8rem 0;
+  }
+  
+  .job-details {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .job-location, .job-contract {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  
+  .job-description {
+    font-size: 0.95rem;
+    color: #ddd;
+    line-height: 1.5;
+    margin: 0.5rem 0 0 0;
+  }
+  
+  .job-matching {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    margin-left: 1rem;
+  }
+  
+  .matching-badge {
+    background: linear-gradient(135deg, #6e57ff, #8a64ff);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Boutons d'action */
+  .analysis-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .action-buttons-container {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  
+  .modify-btn {
+    background-color: #3a3a5a;
+    color: white;
+  }
+  
+  .modify-btn:hover {
+    background-color: #4a4a6a;
+  }
+  
+  .confirm-btn {
+    background: linear-gradient(135deg, #6e57ff, #8a64ff);
+    color: white;
+  }
+  
+  .confirm-btn:hover {
+    background: linear-gradient(135deg, #7e67ff, #9a74ff);
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cv-analysis-card {
+      padding: 1.5rem;
+    }
+    
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .job-details {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .action-buttons-container {
+      flex-direction: column;
+    }
+  }

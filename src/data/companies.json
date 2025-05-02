@@ -1,0 +1,57 @@
+[
+    {
+      "id": "1",
+      "name": "TechVision",
+      "logo": "Images/1.png",
+      "coverImage": "https://images.unsplash.com/photo-1551836022-d5d88e9218df",
+      "industry": "Technologie",
+      "location": "Paris, France",
+      "size": "50-100 employés"
+    },
+    {
+      "id": "2",
+      "name": "GreenLife",
+      "logo": "Images/2.png",
+      "coverImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "industry": "Énergies renouvelables",
+      "location": "Lyon",
+      "size": "100-200 employés"
+    },
+    {
+      "id": "3",
+      "name": "EduSmart",
+      "logo": "https://placehold.co/60x60?text=ES",
+      "coverImage": "https://images.unsplash.com/photo-1581091012184-5c8af92e3546",
+      "industry": "Éducation",
+      "location": "Marseille",
+      "size": "20-50 employés"
+    },
+    {
+      "id": "4",
+      "name": "Qanopée",
+      "logo": "https://placehold.co/60x60?text=QA",
+      "coverImage": "https://images.unsplash.com/photo-1562072541-39fccc50d5ef",
+      "industry": "Conseil digital",
+      "location": "Paris",
+      "size": "< 15 employés"
+    },
+    {
+      "id": "5",
+      "name": "NovaCars",
+      "logo": "https://placehold.co/60x60?text=NC",
+      "coverImage": "https://images.unsplash.com/photo-1601933471666-7a1d220b2b66",
+      "industry": "Mobilité électrique",
+      "location": "Nice",
+      "size": "50-100 employés"
+    },
+    {
+      "id": "6",
+      "name": "ShopLink",
+      "logo": "https://placehold.co/60x60?text=SL",
+      "coverImage": "https://images.unsplash.com/photo-1545239351-1141bd82e8a6",
+      "industry": "E-commerce",
+      "location": "Rennes",
+      "size": "10-20 employés"
+    }
+  ]
+  

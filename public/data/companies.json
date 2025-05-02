@@ -1,0 +1,268 @@
+[
+  {
+    "id": "FR12345678",
+    "name": "TechInnovate",
+    "logo": "TI",
+    "coverImage": null,
+    "industry": "Développement informatique",
+    "location": "Paris, France",
+    "size": "50-250 employés",
+    "founded": "2018",
+    "tagline": "Transformer vos idées en solutions digitales",
+    "description": "Entreprise spécialisée en développement d'applications web et mobiles, avec une expertise en IA et en technologies émergentes.",
+    "website": "https://techinnovate.fr",
+    "values": [
+      { "title": "Innovation", "description": "Nous repoussons constamment les limites de ce qui est possible" },
+      { "title": "Excellence", "description": "Nous visons l'excellence dans tout ce que nous faisons" },
+      { "title": "Collaboration", "description": "Nous croyons que les meilleures idées émergent du travail d'équipe" }
+    ],
+    "benefits": [
+      "Télétravail partiel (3 jours/semaine)",
+      "Horaires flexibles",
+      "Tickets restaurant",
+      "Budget formation annuel"
+    ],
+    "team": [
+      { "name": "Jean Dupont", "position": "CEO & Fondateur", "photo": null, "initials": "JD" },
+      { "name": "Marie Leroy", "position": "CTO", "photo": null, "initials": "ML" }
+    ],
+    "socialMedia": {
+      "linkedin": "https://www.linkedin.com/company/techinnovate",
+      "twitter": "https://twitter.com/techinnovate",
+      "facebook": "https://www.facebook.com/techinnovate"
+    },
+    "jobs": [
+      {
+        "id": 1,
+        "title": "Développeur Full Stack",
+        "location": "Paris",
+        "type": "CDI",
+        "matching": 92,
+        "skills": ["JavaScript", "React", "Node.js", "MongoDB"],
+        "postedDate": "2025-04-15"
+      },
+      {
+        "id": 2,
+        "title": "UI/UX Designer",
+        "location": "Paris",
+        "type": "CDI",
+        "matching": 88,
+        "skills": ["Figma", "Adobe XD", "Design System"],
+        "postedDate": "2025-04-20"
+      }
+    ]
+  },
+  {
+    "id": "FR87654321",
+    "name": "DataVision",
+    "logo": "DV",
+    "coverImage": null,
+    "industry": "Analyse de données",
+    "location": "Paris, France",
+    "size": "10-50 employés",
+    "founded": "2020",
+    "tagline": "Donnez du sens à vos données",
+    "description": "Startup spécialisée en analyse de données massives et visualisation pour les grandes entreprises et administrations.",
+    "website": "https://datavision.io",
+    "values": [
+      { "title": "Précision", "description": "Nous croyons à l'importance de la rigueur analytique" },
+      { "title": "Innovation", "description": "Nous explorons constamment de nouvelles approches" },
+      { "title": "Impact", "description": "Nous nous efforçons de créer un impact mesurable" }
+    ],
+    "benefits": [
+      "Télétravail complet possible",
+      "Horaires flexibles",
+      "Matériel haut de gamme",
+      "Formation continue"
+    ],
+    "team": [
+      { "name": "Sophie Martin", "position": "CEO & Co-fondatrice", "photo": null, "initials": "SM" },
+      { "name": "Thomas Bernard", "position": "Lead Data Scientist", "photo": null, "initials": "TB" }
+    ],
+    "socialMedia": {
+      "linkedin": "https://www.linkedin.com/company/datavision",
+      "twitter": "https://twitter.com/datavision",
+      "facebook": "https://www.facebook.com/datavision"
+    },
+    "jobs": [
+      {
+        "id": 3,
+        "title": "Data Scientist",
+        "location": "Télétravail",
+        "type": "CDI",
+        "matching": 95,
+        "skills": ["Python", "TensorFlow", "SQL", "Power BI"],
+        "postedDate": "2025-04-10"
+      },
+      {
+        "id": 4,
+        "title": "Data Engineer",
+        "location": "Paris",
+        "type": "CDI",
+        "matching": 87,
+        "skills": ["Spark", "Python", "AWS", "Kafka"],
+        "postedDate": "2025-04-22"
+      }
+    ]
+  },
+  {
+    "id": "FR11223344",
+    "name": "GreenTech Solutions",
+    "logo": "GT",
+    "coverImage": null,
+    "industry": "Développement durable",
+    "location": "Lyon, France",
+    "size": "50-250 employés",
+    "founded": "2019",
+    "tagline": "Technologies innovantes pour un monde durable",
+    "description": "Entreprise développant des solutions technologiques pour la transition écologique et la réduction de l'empreinte carbone des entreprises.",
+    "website": "https://greentechsolutions.fr",
+    "values": [
+      { "title": "Durabilité", "description": "Nous plaçons l'impact environnemental au centre de nos décisions" },
+      { "title": "Innovation", "description": "Nous développons des technologies de pointe pour répondre aux défis écologiques" },
+      { "title": "Engagement", "description": "Nous nous engageons pour un futur plus vert et responsable" }
+    ],
+    "benefits": [
+      "Prime mobilité durable",
+      "Repas bio à la cantine",
+      "Projets à impact positif",
+      "Journées de volontariat"
+    ],
+    "team": [
+      { "name": "Julie Dubois", "position": "Directrice Générale", "photo": null, "initials": "JD" },
+      { "name": "Marc Lambert", "position": "Directeur Technique", "photo": null, "initials": "ML" },
+      { "name": "Émilie Renard", "position": "Responsable Innovation", "photo": null, "initials": "ER" }
+    ],
+    "socialMedia": {
+      "linkedin": "https://www.linkedin.com/company/greentechsolutions",
+      "twitter": "https://twitter.com/greentech",
+      "facebook": "https://www.facebook.com/greentechsolutions"
+    },
+    "jobs": [
+      {
+        "id": 5,
+        "title": "Ingénieur développement IoT",
+        "location": "Lyon",
+        "type": "CDI",
+        "matching": 90,
+        "skills": ["C++", "Embedded Systems", "MQTT", "LoRaWAN"],
+        "postedDate": "2025-04-22"
+      },
+      {
+        "id": 6,
+        "title": "Chef de projet",
+        "location": "Lyon",
+        "type": "CDI",
+        "matching": 85,
+        "skills": ["Gestion de projet", "Agile", "Scrum"],
+        "postedDate": "2025-04-18"
+      }
+    ]
+  },
+  {
+    "id": "FR55667788",
+    "name": "FinTech Capital",
+    "logo": "FC",
+    "coverImage": null,
+    "industry": "Finance",
+    "location": "Nantes, France",
+    "size": "250-1000 employés",
+    "founded": "2017",
+    "tagline": "Réinventer la finance pour tous",
+    "description": "Institution financière spécialisée dans les solutions de paiement innovantes et l'inclusion financière.",
+    "website": "https://fintechcapital.fr",
+    "values": [
+      { "title": "Inclusion", "description": "Nous croyons que les services financiers doivent être accessibles à tous" },
+      { "title": "Sécurité", "description": "La protection des données et des transactions est notre priorité absolue" },
+      { "title": "Innovation", "description": "Nous développons constamment de nouvelles solutions" }
+    ],
+    "benefits": [
+      "Prime d'intéressement",
+      "Mutuelle familiale premium",
+      "Plan d'épargne entreprise",
+      "Formations certifiantes"
+    ],
+    "team": [
+      { "name": "Philippe Moreau", "position": "PDG", "photo": null, "initials": "PM" },
+      { "name": "Sarah Klein", "position": "Directrice Innovation", "photo": null, "initials": "SK" }
+    ],
+    "socialMedia": {
+      "linkedin": "https://www.linkedin.com/company/fintechcapital",
+      "twitter": "https://twitter.com/fintechcapital",
+      "facebook": "https://www.facebook.com/fintechcapital"
+    },
+    "jobs": [
+      {
+        "id": 7,
+        "title": "Développeur Backend",
+        "location": "Nantes",
+        "type": "CDI",
+        "matching": 88,
+        "skills": ["Java", "Spring Boot", "Microservices", "PostgreSQL"],
+        "postedDate": "2025-04-05"
+      },
+      {
+        "id": 8,
+        "title": "Ingénieur Cybersécurité",
+        "location": "Nantes",
+        "type": "CDI",
+        "matching": 93,
+        "skills": ["Sécurité réseau", "Pentesting", "Analyse de vulnérabilités"],
+        "postedDate": "2025-04-12"
+      }
+    ]
+  },
+  {
+    "id": "FR99887766",
+    "name": "MédiaPlus",
+    "logo": "MP",
+    "coverImage": null,
+    "industry": "Médias et Communication",
+    "location": "Bordeaux, France",
+    "size": "50-250 employés",
+    "founded": "2018",
+    "tagline": "Façonner le futur des médias numériques",
+    "description": "Groupe média spécialisé dans la production de contenu digital innovant et les stratégies de communication multi-canaux.",
+    "website": "https://mediaplus.fr",
+    "values": [
+      { "title": "Créativité", "description": "Nous encourageons l'originalité et les idées disruptives" },
+      { "title": "Authenticité", "description": "Nous valorisons la transparence et l'honnêteté dans toutes nos communications" },
+      { "title": "Adaptabilité", "description": "Nous embrassons le changement et évoluons avec notre industrie" }
+    ],
+    "benefits": [
+      "Studios créatifs accessibles",
+      "Abonnements médias offerts",
+      "Semaine de 4 jours",
+      "Événements culturels"
+    ],
+    "team": [
+      { "name": "Lucie Girard", "position": "Directrice Générale", "photo": null, "initials": "LG" },
+      { "name": "Nicolas Petit", "position": "Directeur Éditorial", "photo": null, "initials": "NP" }
+    ],
+    "socialMedia": {
+      "linkedin": "https://www.linkedin.com/company/mediaplus",
+      "twitter": "https://twitter.com/mediaplus",
+      "facebook": "https://www.facebook.com/mediaplus"
+    },
+    "jobs": [
+      {
+        "id": 9,
+        "title": "Community Manager",
+        "location": "Bordeaux",
+        "type": "CDD",
+        "matching": 89,
+        "skills": ["Réseaux sociaux", "Marketing digital", "Photoshop"],
+        "postedDate": "2025-04-25"
+      },
+      {
+        "id": 10,
+        "title": "Monteur vidéo",
+        "location": "Télétravail",
+        "type": "Freelance",
+        "matching": 94,
+        "skills": ["Premiere Pro", "After Effects", "DaVinci Resolve"],
+        "postedDate": "2025-04-20"
+      }
+    ]
+  }
+]
